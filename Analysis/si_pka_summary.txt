@@ -1,0 +1,11 @@
+Simulation summary:
+  Neutrons requested: 100000
+  Neutrons recorded in histogram: 100000
+  Incident neutron energy: 1.000 MeV
+  Maximum silicon recoil energy: 0.132797 MeV
+  Average silicon recoil energy: 0.066418 MeV
+  Average damage energy per event: 3.320889e-02 MeV
+  Average displacement count per event: 1328.355709
+  Total damage energy (all events): 3320.889272 MeV
+  NIEL per incident neutron: 3.320889e-02 MeV
+  NIEL per incident neutron (keV): 3.320889e+01 keV
