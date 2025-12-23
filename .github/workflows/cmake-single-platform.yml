@@ -1,0 +1,60 @@
+# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+name: CMake on a single platform
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      # Execute tests defined by the CMake configuration.
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -C ${{env.BUILD_TYPE}}
+
+
+    # 要使用的版本规范。例如：12.x、10.15.1、>=10.15.0。
+    node-version: # 可选
+    # 包含要使用的版本规范的文件。示例：package.json、.nvmrc、.node-version、.tool-versions。
+    node-version-file: # 可选
+    # Node.js 的目标架构。例如：x86、x64。默认情况下将使用系统架构。架构：# 可选
+    # 如果您希望操作检查满足版本规范的最新可用版本，请设置此选项。
+    check-latest: # 可选
+    # 可选的注册表，用于设置身份验证。将在项目级别的 .npmrc 和 .yarnrc 文件中设置注册表，并设置身份验证以从 env.NODE_AUTH_TOKEN 读取。
+    registry-url: # 可选
+    # 用于对作用域注册表进行身份验证的可选作用域。使用 GitHub Packages 注册表 (https://npm.pkg.github.com/) 时，将回退到存储库所有者。 作用域：# 可选
+    # 用于从 node-versions 拉取节点发行版。由于存在默认值，用户通常无需提供此值。在 github.com 上运行此操作时，默认值即可满足要求。在 GHES 上运行此操作时，如果遇到速率限制，您可以传递 github.com 的个人访问令牌。
+    token: # 可选，默认值为 ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # 用于指定默认目录中用于缓存的包管理器。支持的值：npm、yarn、pnpm。 缓存：# 可选
+    # 设置为 false 可禁用自动缓存。默认情况下，当 devEngines.packageManager 或 package.json 中的顶级 packageManager 字段指定 npm 作为包管理器时，缓存将被启用。
+    package-manager-cache: # 可选，默认为 true
+    # 用于指定依赖文件的路径：package-lock.json、yarn.lock 等。支持通配符或文件名列表，用于缓存多个依赖项。
+    cache-dependency-path: # 可选
+    # 用于指定从哪个备用镜像下载 Node.js 二进制文件 镜像：# 可选
+    # 从镜像获取数据时用作授权标头的令牌 镜像令牌：# 可选
+          
